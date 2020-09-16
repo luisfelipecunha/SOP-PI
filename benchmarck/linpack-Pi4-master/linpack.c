@@ -99,9 +99,12 @@ void main(void)
     printf("    Reps Time(s) DGEFA   DGESL  OVERHEAD    KFLOPS\n");
     printf("----------------------------------------------------\n");
 
+    //ARQUIVO CSV
     FILE *file;
     file = fopen("bateria-linpack.csv", "a+");
-    fprintf(file, " \n Reps;Time(s);DGEFA;DGESL;OVERHEAD;KFLOPS \n");
+    //CABECALHO DO CSV
+    fprintf(file, " \n Reps,Time(s),DGEFA,DGESL,OVERHEAD,KFLOPS \n");
+
     for (i = 0; i <= 30; i++)
     {
       nreps = 1;
@@ -167,11 +170,12 @@ static REAL linpack(FILE *file, long nreps, int arsize)
   if (toverhead < 0.)
     toverhead = 0.;
 
-  fprintf(file, "%8ld; %6.2f; %6.2f%%; %6.2f%%; %6.2f%%; %9.3f\n",
+  //ADICIONA LINHA COM RESULTADO =>
+  fprintf(file, "%8ld, %6.2f, %6.2f%%, %6.2f%%, %6.2f%%, %9.3f\n",
           nreps, totalt, 100. * tdgefa / totalt,
           100. * tdgesl / totalt, 100. * toverhead / totalt,
           kflops);
-
+  //
   printf("%8ld %6.2f %6.2f%% %6.2f%% %6.2f%%  %9.3f\n",
          nreps, totalt, 100. * tdgefa / totalt,
          100. * tdgesl / totalt, 100. * toverhead / totalt,
